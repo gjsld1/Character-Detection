@@ -3,6 +3,7 @@ import pytesseract
 from PIL import Image
 
 from bs4 import BeautifulSoup
+import re
 
 
 #cv2.IMREAD_COLOR : 투명한 부분 무시되는 컬러
@@ -14,8 +15,19 @@ hocr = pytesseract.image_to_pdf_or_hocr('banana.jpeg', extension='hocr')
 soup = BeautifulSoup(hocr, 'html.parser')
 #print(soup)
 
-coordinates = soup.select('span.ocrx_word')
-print(coordinates)
+ocrx_word = soup.select('span.ocrx_word')
+#print(coordinates)
+
+coordinates = []
+for word in ocrx_word:
+    temp = word.attrs['title'].split()
+    min_x = int(temp[1])
+    min_y = int(temp[2])
+    max_x = int(temp[3])
+    max_y = int(re.sub(';','', temp[4]))
+    print(min_x, min_y, max_x, max_y)
+    coordinates.append((min_x, min_y, max_x, max_y))
+
 """
 print(pytesseract.image_to_string(Image.open('banana.jpeg')))
 
