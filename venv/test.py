@@ -5,21 +5,22 @@ from PIL import Image
 from bs4 import BeautifulSoup
 import re
 
-
 #cv2.IMREAD_COLOR : 투명한 부분 무시되는 컬러
 #cv2.IMREAD_GRAYSCALE : 흑백 이미지로 로드
 #cv2.IMREAD_UNCHANGED : 알파 채널을 포함한 이미지 그대로 로드
 
+print(pytesseract.image_to_boxes('banana.jpeg'))
 hocr = pytesseract.image_to_pdf_or_hocr('banana.jpeg', extension='hocr')
 
 soup = BeautifulSoup(hocr, 'html.parser')
 #print(soup)
 
 ocrx_word = soup.select('span.ocrx_word')
-#print(coordinates)
+#print(ocrx_word)
 
 coordinates = []
 for word in ocrx_word:
+    print(word)
     temp = word.attrs['title'].split()
     min_x = int(temp[1])
     min_y = int(temp[2])
