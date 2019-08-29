@@ -9,7 +9,7 @@ import re
 #cv2.IMREAD_GRAYSCALE : 흑백 이미지로 로드
 #cv2.IMREAD_UNCHANGED : 알파 채널을 포함한 이미지 그대로 로드
 
-print(pytesseract.image_to_boxes('banana.jpeg'))
+#print(pytesseract.image_to_boxes('banana.jpeg'))
 hocr = pytesseract.image_to_pdf_or_hocr('banana.jpeg', extension='hocr')
 
 soup = BeautifulSoup(hocr, 'html.parser')
@@ -20,7 +20,7 @@ ocrx_word = soup.select('span.ocrx_word')
 
 coordinates = []
 for word in ocrx_word:
-    print(word)
+    #print(word)
     temp = word.attrs['title'].split()
     min_x = int(temp[1])
     min_y = int(temp[2])
@@ -29,6 +29,16 @@ for word in ocrx_word:
     print(min_x, min_y, max_x, max_y)
     coordinates.append((min_x, min_y, max_x, max_y))
 
+line_x = []
+for i in range(len(max_x)):
+    if(i==0): temp=max_x[i]
+    elif(max_x[i]==max_x[i-1]):
+        temp += max_x[i]
+        flag=1
+    else: temp=max_x[i]
+
+    if(flag==1): continue
+    else: line_x.append(temp)
 """
 print(pytesseract.image_to_string(Image.open('banana.jpeg')))
 
