@@ -30,15 +30,19 @@ for word in ocrx_word:
     coordinates.append((min_x, min_y, max_x, max_y))
 
 line_x = []
-for i in range(len(max_x)):
-    if(i==0): temp=max_x[i]
-    elif(max_x[i]==max_x[i-1]):
-        temp += max_x[i]
+flag = 0
+for i in range(len(coordinates)):
+    if(i==0): temp=coordinates[i][2]
+    elif(coordinates[i][2]==coordinates[i-1][2]):
+        temp += coordinates[i][2]
         flag=1
-    else: temp=max_x[i]
+    else: temp=coordinates[i][2]
 
     if(flag==1): continue
     else: line_x.append(temp)
+
+for i in line_x:
+    print(i)
 """
 print(pytesseract.image_to_string(Image.open('banana.jpeg')))
 
