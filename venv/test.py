@@ -10,6 +10,9 @@ import re
 #cv2.IMREAD_UNCHANGED : 알파 채널을 포함한 이미지 그대로 로드
 
 #print(pytesseract.image_to_boxes('banana.jpeg'))
+output = pytesseract.image_to_string('banana.jpeg')
+print(output)
+
 hocr = pytesseract.image_to_pdf_or_hocr('banana.jpeg', extension='hocr')
 
 soup = BeautifulSoup(hocr, 'html.parser')
