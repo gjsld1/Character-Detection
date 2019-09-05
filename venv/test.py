@@ -31,11 +31,22 @@ ocrx_word = soup.select('span.ocrx_word')
 
 coordinates = []
 for word in ocrx_word:
-    print(word)
+    #print(word)
+    text = word.text
     temp = word.attrs['title'].split()
     min_x = int(temp[1])
     max_x = int(temp[3])
-    coordinates.append((min_x, max_x))
+    coordinates.append((text, min_x, max_x))
+
+idx = 0
+line_x = []
+for i in range(len(lines)):
+    sum = 0
+    for j in range(len(lines[i])):
+        sum += coordinates[idx][1] + coordinates[idx][2]
+        idx += 1
+    print(sum)
+    line_x.append(sum)
 
 
 """
