@@ -11,7 +11,15 @@ import re
 
 #print(pytesseract.image_to_boxes('banana.jpeg'))
 output = pytesseract.image_to_string('banana.jpeg')
-print(output)
+#print(output)
+
+lines = []
+sentence = output.split('\n')
+
+for line in sentence:
+    if not line: continue
+    print(line.split())
+    lines.append(line.split())
 
 hocr = pytesseract.image_to_pdf_or_hocr('banana.jpeg', extension='hocr')
 
@@ -23,29 +31,13 @@ ocrx_word = soup.select('span.ocrx_word')
 
 coordinates = []
 for word in ocrx_word:
-    #print(word)
+    print(word)
     temp = word.attrs['title'].split()
     min_x = int(temp[1])
-    min_y = int(temp[2])
     max_x = int(temp[3])
-    max_y = int(re.sub(';','', temp[4]))
-    print(min_x, min_y, max_x, max_y)
-    coordinates.append((min_x, min_y, max_x, max_y))
+    coordinates.append((min_x, max_x))
 
-line_x = []
-flag = 0
-for i in range(len(coordinates)):
-    if(i==0): temp=coordinates[i][2]
-    elif(coordinates[i][2]==coordinates[i-1][2]):
-        temp += coordinates[i][2]
-        flag=1
-    else: temp=coordinates[i][2]
 
-    if(flag==1): continue
-    else: line_x.append(temp)
-
-for i in line_x:
-    print(i)
 """
 print(pytesseract.image_to_string(Image.open('banana.jpeg')))
 
