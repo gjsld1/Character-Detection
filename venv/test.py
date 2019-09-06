@@ -35,15 +35,17 @@ for word in ocrx_word:
     text = word.text
     temp = word.attrs['title'].split()
     min_x = int(temp[1])
+    min_y = int(temp[2])
     max_x = int(temp[3])
-    coordinates.append((text, min_x, max_x))
+    max_y = int(temp[4].replace(";",""))
+    coordinates.append((text, min_x, min_y, max_x, max_y))
 
 idx = 0
 line_x = []
 for i in range(len(lines)):
     sum = 0
     for j in range(len(lines[i])):
-        sum += coordinates[idx][1] + coordinates[idx][2]
+        sum += coordinates[idx][1] + coordinates[idx][3] # min_x+max_x
         idx += 1
     print(sum)
     line_x.append(sum)
