@@ -48,16 +48,23 @@ for word in ocrx_word:
     max_y = int(temp[4].replace(";",""))
     coordinates.append((text, min_x, min_y, max_x, max_y))
 
+"""*) 이미지 전처리를 통해 더 정확한 글자 추출이 가능하도록"""
 """1) 각 줄마다 단어들의 min_x와 max_x의 합이 증가하는 지 확인"""
 """2) 각 줄의 첫번째 단어의 min_y와 max_y의 합이 증가하는 지 확인"""
-"""*) 이미지 전처리를 통해 더 정확한 글자 추출이 가능하도록"""
 
 idx = 0
-line_x = []
+line_x_sum = []
+line_y_sum = []
 for i in range(len(lines)):
-    sum = 0
+    sum_x = 0
+    temp = []
+    line_y_sum.append(coordinates[idx][2]+coordinates[idx][4]) # min_y+max_y
+
     for j in range(len(lines[i])):
-        sum += coordinates[idx][1] + coordinates[idx][3] # min_x+max_x
+        sum_x += coordinates[idx][1] + coordinates[idx][3] # min_x+max_x
         idx += 1
-    print(sum)
-    line_x.append(sum)
+        temp.append(sum_x)
+    print(temp)
+    line_x_sum.append(temp)
+
+
