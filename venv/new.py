@@ -1,7 +1,6 @@
 import cv2
 import pytesseract
 from PIL import Image
-
 from bs4 import BeautifulSoup
 import re
 
@@ -16,7 +15,7 @@ gray = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1] # 배
 
 cv2.imshow("gray", gray)
 cv2.waitKey(0)
-
+cv2.destroyAllWindows()
 
 #print(pytesseract.image_to_boxes('banana.jpeg'))
 output = pytesseract.image_to_string('banana.jpeg')
@@ -62,18 +61,3 @@ for i in range(len(lines)):
         idx += 1
     print(sum)
     line_x.append(sum)
-
-
-"""
-print(pytesseract.image_to_string(Image.open('banana.jpeg')))
-
-src = cv2.imread('ginja.png', cv2.IMREAD_COLOR)
-src2 = cv2.cvtColor(src, cv2.COLOR_BGR2GRAY)
-cv2.imshow('src2', src2)
-dst = cv2.imread(src, cv2.COLOR_BGR2GRAY)
-
-cv2.imshow('src', src)
-#cv2.imshow('dst', dst)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
-"""
