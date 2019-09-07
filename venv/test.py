@@ -9,6 +9,15 @@ import re
 #cv2.IMREAD_GRAYSCALE : 흑백 이미지로 로드
 #cv2.IMREAD_UNCHANGED : 알파 채널을 포함한 이미지 그대로 로드
 
+# OCR 정확도 개선을 위한 이미지 전처리
+image = cv2.imread('banana.jpeg')
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # 그레이 스케일로 변환
+gray = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1] # 배경에서 전경 텍스트를 분할하기 위한 임계값 사용, 회색배경 위에 겹쳐진 검은색 텍스트 읽는데 유용
+
+cv2.imshow("gray", gray)
+cv2.waitKey(0)
+
+
 #print(pytesseract.image_to_boxes('banana.jpeg'))
 output = pytesseract.image_to_string('banana.jpeg')
 #print(output)
